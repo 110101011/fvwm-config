@@ -1,0 +1,17 @@
+#################################################
+#						#
+#	Program Styles				#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	VersionL	0.1b			#
+#						#
+#################################################
+
+# NoActiveIconOverride / IconOverride
+Style	"*"		Icon 48x48/x.png, 		MiniIcon mini/x.png
+Style	"XTerm"		Icon 48x48/terminal.png,	MiniIcon mini/terminal.png
+Style	"Firefox"	Icon 48x48/firefox.png,		MiniIcon mini/firefox.png
+Style	"Irssi"		Icon 48x48/irc.png,		MiniIcon mini/irc.png
+
+Style	"HiddenConsole"	Sticky, WindowListSkip, NoTitle, StaysOnTop, NoHandles, CirculateSkip
+Style	"HiddenConsole"	WindowShadeSteps 100, ResizeHintOverride

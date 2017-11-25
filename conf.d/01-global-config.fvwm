@@ -1,0 +1,43 @@
+#################################################
+#						#
+#	Global configuration			#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	Version:	0.1b			#
+#						#
+#################################################
+
+# Virtual Desktops
+DesktopSize	1x1
+DesktopName	0	Main
+DesktopName	1	Work
+Edgescroll	100 100
+Edgeresistance	150
+Edgethickness	1
+Style	*	EdgeMoveDelay		150
+Style	*	EdgeMoveResistance	150
+
+# Mouse and Focus behavoir
+ClickTime	350
+MoveThreshold	3
+Style	*	SloppyFocus, MouseFocusClickRaises
+
+EwmhBaseStruts	62 162 0 130
+IgnoreModifiers	L25
+
+# Global Stylews and Options
+OpaqueMoveSize	-1
+Emulate		MWM
+HideGeometryWindow	Always
+XorValue	55555
+SetAnimation	10	-.01 0 .01 .03 .08 .18 .3 .45 .6 .75 .85 .90 .94 .97 .99 1.0
+Style	*	TileCascadePlacement, GrabFocusOff
+Style	*	NoPPosition, ResizeOpaque
+Style	*	SnapAttraction 5 SameType screen
+Style	*	SnapGrid	3 3
+Style	*	DecorateTransient, DontRaiseTransient
+Style	*	DontLowerTransient, StackTransientParent
+Style	*	GrabFocusTransientOff
+Style	*	WindowShadeSteps 20, WindowShadeScrolls
+Style	*	MwmDecor, SlipperyIcon
+Style	*	IconBox screen w 15 15 -165 -15, IconGrid 3 3, IconFill right top

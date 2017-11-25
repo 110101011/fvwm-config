@@ -1,0 +1,56 @@
+#################################################
+#						#
+#	Decor					#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	Version:	0.1b			#
+#						#
+#################################################
+
+# Insomnia Decor
+DestroyDecor	Insomnia
+AddToDecor	Insomnia
++ TitleStyle	LeftJustified Height 24
++ ButtonStyle	1 \
+	ActiveUp	(Pixmap $[fvwm_img]/button/close-activeup.png -- Flat) \
+	ActiveDown	(Pixmap $[fvwm_img]/button/close-activedown.png --Flat) \
+	Inactive	(Pixmap $[fvwm_img]/button/inactive.png --Flat)
++ ButtonStyle	1	-	Clear
++ ButtonStyle	3 \
+	ActiveUp	(Pixmap $[fvwm_img]/button/iconify-activeup.png --Flat) \
+	ActiveDown	(Pixmap $[fvwm_img]/button/iconify-activedown.png --Flat) \
+	Inactive	(Pixmap $[fvwm_img]/button/inactive.png --Flat)
++ ButtonStyle	3	-	Clear MwmDecorMin
++ ButtonStyle	5 \
+	ActiveUp	(Pixmap $[fvwm_img]/button/maximize-activeup.png --Flat) \
+	ActiveDown	(Pixmap $[fvwm_img]/button/maximize-activedown.png --Flat) \
+	Inactive	(Pixmap $[fvwm_img]/button/inactive.png --Flat)
++ ButtonStyle	5	-	Clear MwmDecorMax
++ TitleStyle	AllActive MultiPixmap \
+	Main		AdjustedPixmap	$[fvwm_img]/decor/title-main-active.xpm, \
+	LeftEnd		AdjustedPixmap	$[fvwm_img]/decor/title-leftend-active.png, \
+	RightEnd	AdjustedPixmap	$[fvwm_img]/decor/title-rightend-active.xpm, \
+	UnderText	AdjustedPixmap	$[fvwm_img]/decor/title-undertext-active.xpm, \
+	LeftOfText	AdjustedPixmap	$[fvwm_img]/decor/title-leftoftext-active.xpm, \
+	RightOfText	AdjustedPixmap	$[fvwm_img]/decor/title-rightoftext-active.xpm
++ TitleStyle	AllInactive MultiPixmap \
+	Main		AdjustedPixmap $[fvwm_img]/decor/title-main-inactive.xpm, \
+	LeftEnd		AdjustedPixmap $[fvwm_img]/decor/title-leftend-inactive.xpm, \
+	RightEnd	AdjustedPixmap $[fvwm_img]/decor/title-rightend-inactive.xpm, \
+	UnderText	AdjustedPixmap $[fvwm_img]/decor/title-undertext-inactive.xpm, \
+	LeftOfText	AdjustedPixmap $[fvwm_img]/decor/title-leftoftext-inactive.xpm, \
+	RightOfText	AdjustedPixmap $[fvwm_img]/decor/title-rightoftext-inactive.xpm
++ TitleStyle	-- Flat
++ BorderStyle	Simple -- NoInset Flat
++ ButtonStyle	All -- UseTitleStyle
+
+# Window style
+Style 	"*"	UseDecor Insomnia
+Style 	"*"	Font "xft:Sans:Bold:size=8:minspace=False:antialias=True"
+Style	"*"	BorderWidth 1, HandleWidth 1
+Style	"*"	MWMBorder, FirmBorder
+Style	"*"	Colorset 2
+Style	"*"	HilightColorset 7
+Style	"*"	BorderColorset 2
+Style	"*"	HilightBorderColorset 7
+Style	"*"	RoundedCorners

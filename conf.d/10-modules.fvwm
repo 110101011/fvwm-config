@@ -1,0 +1,75 @@
+#################################################
+#						#
+#	Modules					#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	Version:	0.1b			#
+#################################################
+
+# Thumbnail Icons
+DestroyModuleConfig	Iconificate: 		*
+*Iconificate:		ThumbIconWidth 		150
+*Iconificate:		ThumbIconHeight		88
+*Iconificate:		MiniIconPadding		1
+*Iconificate:		MiniIconBorderWidth	1
+
+Style	*	!IconTitle
+Style	*	!IconOverride
+Style	*	!UseIconPosition
+Style 	* 	IconSize -1 -1
+Style 	* 	IconBackgroundColorset 6
+Style 	*	IconBackgroundRelief 1
+Style 	* 	IconBackgroundPadding 0
+Style 	* 	IconBox 1366x638-0-0, IconGrid 1 1, IconFill right bottom
+
+Style WithMiniIcon EWMHMiniIconOverride, EWMHDonateMiniIcon
+# Define MiniIcon
+## Style 'Program' MiniIcon 'Icon.png', UseStyle WithMiniIcon
+
+*Iconificate: MiniIconBorderColor rgb(54,100,139)
+*Iconificate: MiniIconBackgroundColor rgb(38,38,38)
+
+# Fvwm Ident
+DestroyModuleConfig FvwmIdent: *
+*FvwmIdent: Colorset 6
+*FvwmIdent: Font "xft:Sans:Bold:size=12:antialias=True"
+
+# FvwmPager
+Style "FvwmPager" NoTitle, !Handles, !Borders, Sticky, WindowListSkip, \
+  CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable
+
+DestroyModuleConfig FvwmPager: *
+*FvwmPager: Geometry 150x480-0+0
+*FvwmPager: Colorset * 6
+*FvwmPager: HilightColorset * 10
+*FvwmPager: BalloonColorset * 9
+*FvwmPager: WindowColorsets 9 10
+*FvwmPager: Font "xft:Sans:Bold:pixelsize=12:minspace=True:antialias=True"
+*FvwmPager: Balloons All
+*FvwmPager: BalloonFont "xft:Sans:Bold:pixelsize=12:minspace=True:antialias=True"
+*FvwmPager: BallonYOffset +2
+*FvwmPager: Window3dBorders
+*FvwmPager: MiniIcons
+*FvwmPager: UseSkipList
+*FvwmPager: Rows 3
+
+# Buttons Left Top
+Style "MyButtons" NoTitle, !Handles, !Borders, Sticky, WindowListSkip, \
+  CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable
+
+DestroyModuleConfig MyButtons: *
+*MyButtons: Geometry 60x400+0+0
+*MyButtons: Colorset 6
+*MyButtons: Rows 38
+*MyButtons: Columns 1
+*MyButtons: Frame 0
+*MyButtons: Font "Shadow=3:xft:Sans:Bold:pixelsize=14:minspace=True:antialias=True"
+*MyButtons: (1x5, Frame 0, Icon 48x48/terminal.png, \
+  Action(Mouse 1) "FvwmXTerm")
+*MyButtons: (1x5, Frame 0, Icon 48x48/gimp.png, \
+  Action(Mouse 1) "FvwmGimp")
+*MyButtons: (1x5, Frame 0, Icon 48x48/firefox.png, \
+  Action(Mouse 1) "FvwmFireFox")
+*MyButtons: (1x5, Frame 0, Icon 48x48/irc.png, \
+  Action(Mouse 1) "FvwmIrssi")
+*MyButtons: (1x1, Frame 0)

@@ -1,0 +1,26 @@
+#################################################
+#						#
+#	Key Bindings				#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	Version:	0.2b			#
+#						#
+#################################################
+
+# Keyboard
+Key	F1	A M	Menu FvwmRootMenu
+Key	Tab	A M	WindowList Root c c NoDeskSort, SelectOnRelease Meta_L
+Key	Return	A 4	Next (CirculateHit, HiddenConsole) HiddenConsoleKeyBinding
+
+# Mouse
+Mouse	1	R A	Menu FvwmRootMenu
+Mouse	3	R A	Menu FvwmWindowOpsMenu
+Mouse	1	1 A	FvwmDeleteOrDestroy
+Mouse	1	3 A	FvwmIconificate
+Mouse	1	5 A	FvwmMaximize	100	100
+Mouse	2	5 A	FvwmMaximize	0	100
+Mouse	3	5 A	FvwmMaximize	100	0
+Mouse	1	W M	FvwmMoveOrIconify
+Mouse	1	I A	FvwmMoveOrIconify
+Mouse	4	T A	FvwmWindowShade	True
+Mouse	5	T A	FvwmWindowShade False

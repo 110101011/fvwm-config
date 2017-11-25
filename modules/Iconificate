@@ -1,0 +1,262 @@
+#!/usr/bin/perl
+
+use strict ;
+use warnings ;
+use v5.18 ;
+
+use lib `fvwm-perllib dir`;
+use FVWM::Module;
+use Data::Dump qw( dump ) ;
+use Image::Magick ;             ##  libimage-magick-perl
+use Path::Tiny ;
+use Try::Tiny ;
+use IPC::Run qw( run timeout ) ;
+
+my $module = new FVWM::Module(
+    Name => 'Iconificate', 
+    Debug => 1,
+    );
+
+my $modname = $module->name ;
+my @cmds ;
+my ($wid, $miniicon_file) = @ARGV ;
+
+$wid = hex($wid) if $wid =~ /^0x/ ;
+
+##  Logfile
+my $logfile = path("$ENV{FVWM_USERDIR}/log/Iconificate.log") ;
+unlink $logfile ;
+my $logger = "yes" ;
+#my $logger = "" ;
+
+##  These vars gain their values from the module config.
+my $thumb_w ;
+my $thumb_h ;
+my $miniicon_padding ;
+my $miniicon_backcolor ;
+my $miniicon_borderwidth ;
+my $miniicon_bordercolor ;
+
+$module->add_handler(M_CONFIG_INFO, \&read_config) ;
+$module->add_handler(M_END_CONFIG_INFO, sub {
+        debug("[$modname] read config finished", 0) ;
+        iconic_mode() ;
+        $module->terminate ;
+        });
+
+$module->send("Send_ConfigInfo");
+$module->event_loop ;
+
+####  SUBROUTINES
+
+sub iconic_mode  {
+
+    ##  Useful webpages :-
+    ##  http://www.imagemagick.org/script/command-line-processing.php
+    ##  http://www.imagemagick.org/script/perl-magick.php
+
+    logger("debug", "iconic_mode : start") ;
+    logger("debug", "wid : $wid,  mini: $miniicon_file") ;
+
+    my $aspect = $thumb_w / $thumb_h ;
+    my $thumbfile = path("$ENV{FVWM_USERDIR}/tmp/$wid.png") ;
+    my $thumb = Image::Magick->New() ;
+    my $err = 1  ;
+
+    ##  3 tries to grab an image of the current window.
+    ##  The retvar for IMagick is always undef except when in error.
+    
+    foreach (1, 2, 3) {
+
+        logger("debug", "iconic_mode : begin screenshot") ;
+
+        ##  A 3 second timeout on the screenshot. 
+        my $t = timeout(3) ;
+        my $out = my $in = my $stderr = "" ;
+
+        my @cmd = ("xwd", "-silent", "-nobdrs", "-id", "$wid", "-out", "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd" ) ;
+
+    #my @cmd2 = ("xwd" , "-silent -nobdrs -id $wid -out $ENV{FVWM_USERDIR}/tmp/thumbicon.xwd");
+
+        my $excp = try {
+            run \@cmd, \$in, \$out, \$stderr, $t ;
+        } catch { logger("debug", "catch error") } ;
+
+        ##  If import cmd produced error, then repeat again.
+        if ($stderr or not -r "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd")  {
+            logger("debug", "iconic_mode : import failed \nstderr: $stderr \nt: $t \nCommand: @cmd") ;
+            next ;
+        }
+
+        ##  If png file cannot be opened, then repeat again.
+        if (not open(IMAGE, "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd")) {
+            logger("debug", "iconic_mode : can't open thumbicon.xwd") ;
+            next ;
+        }
+
+        ##  If PerlMagic successfully read the png, then continue.
+        $err = $thumb->ReadImage("$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd");
+        close(IMAGE);
+        last if not $err ;
+    }
+
+    ##  Return early if the screenshot operation failed.
+    if ($err)  {
+        logger("debug", "iconic_mode : screenshot FAILED") ;
+        return 0 ;
+    }
+
+    my $xwd_w = $thumb->Get('columns') ;
+    my $xwd_h = $thumb->Get('rows') ;
+
+    ##  Crop the window such that it can still be recognized.
+    if ( $xwd_w/$xwd_h < $aspect )  {
+        my $hh = int($xwd_w / $aspect) ;
+        return 0 if $thumb->Crop(
+            geometry => "${xwd_w}x${hh}+0+0"
+        ) ;
+        $xwd_h = $thumb->Get('rows') ;
+    } elsif ( $xwd_w/$xwd_h > $aspect )  {
+        my $ww = int($xwd_h * $aspect) ;
+        return 0 if $thumb->Crop(
+            geometry => "${ww}x${xwd_h}+0+0"
+        ) ;
+        $xwd_w = $thumb->Get('columns') ;
+    }
+
+    ##  Convert large image into a thumbnail.
+    $err = $thumb->Thumbnail(geometry => "${thumb_w}x${thumb_h}!") ;
+    return 0 if $err ;
+    logger("debug", "iconic_mode : create small thumbnail [pass]") ;
+
+    ##  Add a mini-icon-to thumbnail, if avail.
+    my $mini = get_mini_icon() ;
+    if ($mini)  {
+        logger("debug", "iconic_mode : get_mini_icon [pass]") ;
+        $err = $thumb->Composite(image => $mini, gravity => "SouthEast") ;
+        return 0 if $err ;
+        logger("debug", "iconic_mode : miniicon composite into thumbnail [pass]") ;
+    } else {
+        logger("debug", "iconic_mode : get_mini_icon [fail]") ;
+    } ;
+
+    ##  Save the finished thumbnail.
+    open(IMAGE, ">$thumbfile") ;
+    $err = $thumb->Write(
+        file=>\*IMAGE, 
+        filename=>$thumbfile, 
+        quality => 1
+        ) ;
+    return 0 if $err ;
+    logger("debug", "iconic_mode : IM writes finished thumb [pass] ") ;
+    close IMAGE ;
+
+    ##  Tell fvwm to iconify the window.
+    addcmd("WindowStyle Icon $thumbfile ") ;
+    addcmd("Iconify True") ;
+    addcmd("All (CurrentDesk, Iconic) PlaceAgain Icon") ;
+    sendcmds($wid) ;
+
+    ##  Cleanup.
+    undef $mini ;
+    undef $thumb ;
+    unlink "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd" ;
+
+    logger("debug", "iconic_mode : Finished with success ") ;
+    return 1 ;
+}
+
+sub get_mini_icon {
+
+    logger("debug", "get_mini_icon : start") ;
+
+    return 0 if not defined $miniicon_file ;
+    return 0 if not -r $miniicon_file ;
+    logger("debug", "get_mini_icon : miniicon file exits [pass] ") ;
+
+    ##  Read in the miniicon image
+    my $miniicon = Image::Magick->new ;
+    return 0 if not open(IMAGE, $miniicon_file) ;
+    logger("debug", "get_mini_icon : open  the miniicon_file [pass] ") ;
+    my $err = $miniicon->Read(file=>\*IMAGE) ;
+    return 0 if $err ;
+    logger("debug", "get_mini_icon : IM reads the open miniicon [pass] ") ;
+    close IMAGE ;
+
+    ##  Create an empty canvas that is slightly larger.
+    my $mini_h = $miniicon->Get('rows') + $miniicon_padding ;
+    my $mini_w = $miniicon->Get('columns') + $miniicon_padding ;
+    my $mini_geom = "${mini_w}x${mini_h}" ;
+
+    my $mini = Image::Magick->New() ;
+    $mini->Set(size => $mini_geom) ;
+    $err = $mini->ReadImage("canvas:$miniicon_backcolor") ;
+    return 0 if $err ;
+    logger("debug", "get_mini_icon : IM makes an empty canvas [pass] ") ;
+
+    ##  Place the miniicon atop the canvas.
+    $mini->Composite( image => $miniicon, gravity => "Center") ;
+    return 0 if $err ;
+    logger("debug", "get_mini_icon : Miniicon put atop canvas [pass] ") ;
+
+    ##  Add a border to miniicons north and west sides. 
+    $err = $mini->Splice(
+        gravity => "northwest",
+        geometry => "${miniicon_borderwidth}x$miniicon_borderwidth",
+        background => $miniicon_bordercolor,
+    ) ;
+    return 0 if $err ;
+    logger("debug", "get_mini_icon : Partial border added [pass] ") ;
+
+    ##  Return okay if above steps all completed correctly.
+    undef $miniicon ; 
+    logger("debug", "get_mini_icon : Returns with success [pass] ") ;
+    return $mini ;
+}
+
+sub read_config {
+    my ($module, $event) = @_;
+    return unless $event->_text =~ /^\*$modname(.*)$/;
+    process_config($1);
+}
+
+sub process_config {
+    my ($s) = @_;
+    my ($option, $args)= $s =~/\s*(\w+)\s*(.*)/;
+
+    my %opts = (
+        ThumbIconWidth => sub { $thumb_w = $args },
+        ThumbIconHeight => sub { $thumb_h = $args }, 
+        MiniIconPadding => sub { $miniicon_padding = $args },
+        MiniIconBackgroundColor => sub { $miniicon_backcolor = $args },
+        MiniIconBorderWidth => sub { $miniicon_borderwidth = $args },
+        MiniIconBorderColor => sub { $miniicon_bordercolor = $args },
+    ) ;
+
+    if (defined $opts{$option}) {
+        debug("[$modname] [Config] $option : $args", 0) ;
+        $opts{$option}() ;
+    } else {
+        $module->showMessage("Unknown option \"$option\"");
+    }
+}
+
+sub addcmd   { push @cmds, @_ } ;
+
+sub sendcmds {
+    foreach (@cmds) { $module->send($_, $wid) } ;
+    @cmds = () ;
+}
+
+sub debug {
+    my ($msg, $level) = @_ ;
+    $level = 0 if not defined $level ;
+    $module->debug($msg, $level) ;
+}
+
+sub logger {
+    return 0 unless $logger ;
+    my ($level, $msg) = @_;
+    $msg = "[$level]  $msg\n" ;
+    $logfile->append_utf8($msg) ; 
+}

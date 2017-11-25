@@ -1,0 +1,49 @@
+#################################################
+#						#
+#	Basic Functions				#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	Version:	0.1b			#
+#						#
+#################################################
+
+DestroyFunc	FvwmDeleteOrDestroy
+AddToFunc	FvwmDeleteOrDestroy
++	H	Nop
++	M	Nop
++	C	Delete
++	D	Destroy
+
+DestroyFunc	FvwmIconifyOrShade
+AddToFunc	FvwmIconifyOrShade
++	H	Nop
++	M	Nop
++	C	Iconify
++	D	WindowShade
+
+DestroyFunc	FvwmMaximize
+AddToFunc	FvwmMaximize
++	H	Nop
++	M	Nop
++	C	Maximize $0 $1
++	D	Nop
+
+DestroyFunc	FvwmMoveOrIconify
+AddToFunc	FvwmMoveOrIconify
++	H	Nop
++	M	Move
++	C	Nop
++	D	Iconify
+
+DestroyFunc	WindowShade
+AddToFunc	WindowShade
++	H	Nop
++	M	Nop
++	C	Nop
++	D	WindowShade $0
+
+DestroyFunc	FvwmIconificate
+AddToFunc	FvwmIconificate
++	I	ThisWindow (Iconifiable, !Iconic) \
+		ModuleSynchronous Iconificate $[w.id] $[w.miniiconfile]
+		All (CurrentPage, Iconic) PlaceAgain Icon Anim

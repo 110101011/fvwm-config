@@ -1,0 +1,25 @@
+#################################################
+#						#
+#	Colorsets				#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	VersionL	0.1b			#
+#						#
+#################################################
+
+# Default
+Colorset	0	fg #FFFFFF, bg #000000
+# Inactive windows
+Colorset	1	fg #94A2B7, bg #4F5051
+# Active windows
+Colorset	2	fg #FFFFFF, bg #000000
+# Inactive menu entry and menu background
+Colorset	3	fg #94A2B7, bg #4F5051
+# Active menu entry
+Colorset	4	fg #4286F4, bg #4286F4
+# Greyed out menu entru (only bg used)
+Colorset	5	bg #232426
+# Module foreground and background
+Colorset	6	fg #4286F4, bg #4F5051
+# Hilight
+Colorset	7	hi #3D6FBF, sh #3D6FBF

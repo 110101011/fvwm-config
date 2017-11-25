@@ -1,0 +1,18 @@
+#################################################
+#	  ____________________________		#
+#	 (   _________________________)		#
+#	  ) (__  _  _  _    _  			#
+#	 (   __)( \/ )( \/\/ )/\/\		#
+#	  ) (    \  /  \    //    \		#
+#	 (___)    \/    \/\/(_/\/\_) 2.6.7	#
+#						#
+#	 My personal fvwm2rc file		#
+#	 Justin Verel				#
+#	 Design: 	Insomnia		#
+#	 Date:		25-11-2017		#
+#	 Version:	0.6b			#
+#						#
+#################################################
+
+# Read Config files from $HOME/.fvwm/conf.d/
+PipeRead 'for i in $HOME/.fvwm/conf.d/*.fvwm; do echo Read $i; done'

@@ -1,0 +1,18 @@
+#################################################
+#						#
+#	Enviroment Config			#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	Version:	0.1b			#
+#						#
+#################################################
+
+# Set the enviroment variables
+SetEnv	fvwm_home 	$[HOME]/.fvwm
+SetEnv	fvwm_img	$[fvwm_home]/images
+SetEnv	fvwm_icon	$[fvwm_home]/icons
+SetEnv	fvwm_scrpt	$[fvwm_home]/scripts
+SetEnv	fvwm_wallpapers	$[fvwm_img]/wallpaper
+
+# Set the ImagePath
+ImagePath	$[fvwm_icon]:$[fvwm_icon];.png:+

@@ -1,0 +1,26 @@
+#################################################
+#						#
+#	Startup functions			#
+#	Justin Verel				#
+#	Date:		25-11-2017		#
+#	Version:	0.1b			#
+#						#
+#################################################
+
+DestroyFunc	StartFunction
+AddToFunc	StartFunction
+#+	I	FvwmPager	0 1
++	I	FvwmButtons	MyButtons
++	I	Module		FvwmAuto FvwmAutoHide -menter FuncAutoEnter
++	I	Test (Init) Test (x xterm)	StartHiddenConsole
+
+DestroyFunc	InitFunction
+AddToFunc	InitFunction
+#+	I	FvwmXcompMgr
+#+	I	FvwmCompton
+#+	I	FvwmConky
++	I	Exec exec	fvwm-root -r $[fvwm_wallpapers]/background.png
+
+DestroyFunc	RestartFunction
+AddToFunc	RestartFunction
++	I	Nop
