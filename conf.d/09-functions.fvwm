@@ -24,6 +24,10 @@ DestroyFunc	FvwmIrssi
 AddToFunc	FvwmIrssi
 + I	Exec	exec	xterm -e irssi
 
+DestroyFunc	FvwmTuxCMD
+AddToFunc	FvwmTuxCMD
++ I	Exec	exec	tuxcmd
+
 DestroyFunc	FvwmViewManPages
 AddToFunc	FvwmViewManPages
 + I	Exec	exec	xterm -fg White -bg DarkBlue -g 80x40 -fn 7x14 -fb 7x14bold \
@@ -39,7 +43,7 @@ AddToFunc	FvwmConky
 # Autohide Console
 DestroyFunc 	StartHiddenConsole
 AddToFunc	StartHiddenConsole
-+ I	Exec	exec xterm -geometry 144x37 -name HiddenConsole
++ I	Exec	exec xterm -geometry 143x37 -name HiddenConsole
 + I 	Wait	HiddenConsole
 + I	Next	(HiddenConsole) Resize $[vp.width]p 9
 + I	Autohide	HiddenConsole 0 0 N

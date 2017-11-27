@@ -25,8 +25,8 @@ MenuStyle	*	Font "Shadow=2:xft:Sans:Bold:size=11:antialias=True"
 DestroyMenu	FvwmRootMenu
 AddToMenu	FvwmRootMenu		"Fvwm Root Menu" Title
 + "Programs%menu/programs.png%"		Popup FvwmProgramsMenu
-+ "Console%menu/terminal.png%"		FvwmXTerm
-+ "Fvwm Console%menu/terminal.png%"	Module FvwmConsole
++ "Console%insomnia/Terminal-24.png%"	FvwmXTerm
++ "Fvwm Console%insomnia/Terminal-24.png%"	Module FvwmConsole
 + ""					Nop
 + "Help%menu/help.png%"			Popup FvwmManPagesMenu
 + "Restart FVWM%menu/restart.png%"	Restart
@@ -35,9 +35,10 @@ AddToMenu	FvwmRootMenu		"Fvwm Root Menu" Title
 # Programs Menu
 DestroyMenu	FvwmProgramsMenu
 AddToMenu	FvwmProgramsMenu	"Programs" Title
-+ "Firefox%menu/firefox.png%"		FvwmFirefox
-+ "Gimp%menu/gimp.png%"			FvwmGimp
-+ "Irssi%menu/irc.png%"		FvwmIrssi
++ "Web Browser%insomnia/Web-24.png%"	FvwmFirefox
++ "File Browser%insomnia/File-24.png%"	FvwmTuxCMD
++ "Image Editor%insomnia/ImageEditor-24.png%"	FvwmGimp
++ "Chat%insomnia/Chat-24.png%"		FvwmIrssi
 
 # FVWM Help Menu
 DestroyMenu	FvwmManPagesMenu

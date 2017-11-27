@@ -17,9 +17,10 @@ AddToFunc	StartFunction
 DestroyFunc	InitFunction
 AddToFunc	InitFunction
 #+	I	FvwmXcompMgr
-#+	I	FvwmCompton
-#+	I	FvwmConky
-+	I	Exec exec	fvwm-root -r $[fvwm_wallpapers]/background.png
++	I	FvwmCompton
++	I	FvwmConky
+#+	I	Exec exec	fvwm-root
++	I 	Exec exec	hsetroot -solid '#555555'
 
 DestroyFunc	RestartFunction
 AddToFunc	RestartFunction

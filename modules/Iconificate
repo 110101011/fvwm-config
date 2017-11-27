@@ -14,7 +14,7 @@ use IPC::Run qw( run timeout ) ;
 
 my $module = new FVWM::Module(
     Name => 'Iconificate', 
-    Debug => 1,
+    Debug => 0,
     );
 
 my $modname = $module->name ;
@@ -26,8 +26,8 @@ $wid = hex($wid) if $wid =~ /^0x/ ;
 ##  Logfile
 my $logfile = path("$ENV{FVWM_USERDIR}/log/Iconificate.log") ;
 unlink $logfile ;
-my $logger = "yes" ;
-#my $logger = "" ;
+#my $logger = "yes" ;
+my $logger = "" ;
 
 ##  These vars gain their values from the module config.
 my $thumb_w ;
@@ -60,6 +60,7 @@ sub iconic_mode  {
 
     my $aspect = $thumb_w / $thumb_h ;
     my $thumbfile = path("$ENV{FVWM_USERDIR}/tmp/$wid.png") ;
+    #my $thumbfile = path("/home/nostromo/.fvwm") ;
     my $thumb = Image::Magick->New() ;
     my $err = 1  ;
 
@@ -74,28 +75,29 @@ sub iconic_mode  {
         my $t = timeout(3) ;
         my $out = my $in = my $stderr = "" ;
 
-        my @cmd = ("xwd", "-silent", "-nobdrs", "-id", "$wid", "-out", "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd" ) ;
+        my @cmd = ("xwd", "-silent", "-nobdrs", "-id", 
+            $wid, "-out", "/tmp/thumbicon.xwd" ) ;
 
-    #my @cmd2 = ("xwd" , "-silent -nobdrs -id $wid -out $ENV{FVWM_USERDIR}/tmp/thumbicon.xwd");
+        #logger("debug", "@cmd") ;
 
         my $excp = try {
             run \@cmd, \$in, \$out, \$stderr, $t ;
-        } catch { logger("debug", "catch error") } ;
+        } catch { "" } ;
 
-        ##  If import cmd produced error, then repeat again.
-        if ($stderr or not -r "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd")  {
-            logger("debug", "iconic_mode : import failed \nstderr: $stderr \nt: $t \nCommand: @cmd") ;
+        ##  If import cmnd produced error, then repeat again.
+        if ($stderr or not -r "/tmp/thumbicon.xwd")  {
+            logger("debug", "iconic_mode : import failed \n$stderr") ;
             next ;
         }
 
         ##  If png file cannot be opened, then repeat again.
-        if (not open(IMAGE, "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd")) {
+        if (not open(IMAGE, '/tmp/thumbicon.xwd')) {
             logger("debug", "iconic_mode : can't open thumbicon.xwd") ;
             next ;
         }
 
         ##  If PerlMagic successfully read the png, then continue.
-        $err = $thumb->ReadImage("$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd");
+        $err = $thumb->Read(file=>\*IMAGE);
         close(IMAGE);
         last if not $err ;
     }
@@ -160,7 +162,7 @@ sub iconic_mode  {
     ##  Cleanup.
     undef $mini ;
     undef $thumb ;
-    unlink "$ENV{FVWM_USERDIR}/tmp/thumbicon.xwd" ;
+    unlink "/tmp/thumbicon.xwd" ;
 
     logger("debug", "iconic_mode : Finished with success ") ;
     return 1 ;
