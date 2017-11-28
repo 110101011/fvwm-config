@@ -6,6 +6,48 @@
 #	Version:	0.1b			#
 #################################################
 
+# Logout
+DestroyModuleConfig	FvwmForm:	Logout
+*Logout:	GrabServer
+*Logout:	WarpPointer
+*Logout:	Command		Beep
+*Logout:	Line		Center
+*Logout:	Text		"Do you really want to Logout?"
+*Logout:	Line		Expand
+*Logout:	Button		quit "Logout" ^M
+*Logout:	Command		Quit
+*Logout:	Button		quit "Cancel" ^[
+*Logout:	Command		Nop
+*Logout:	Timeout		20 Quit "Automatic Logout will occur in %% seconds."
+
+# Reboot
+DestroyModuleConfig	FvwmForm:	Reboot
+*Reboot:	GrabServer
+*Reboot:	WarpPointer
+*Reboot:	Command		Beep
+*Reboot:	Line		Center
+*Reboot:	Text		"Do you really want to Reboot?"
+*Reboot:	Line		Expand
+*Reboot:	Button		quit "Reboot" ^R
+*Reboot:	Command		$[fvwm_scrpt]/reboot
+*Reboot:	Button		quit "Cancel" ^[
+*Reboot:	Command		Nop
+*Reboot:	Timeout		20 $[fvwm_scrpt]/reboot "Automatic Reboot will occur in %% seconds."
+
+# Shutdown
+DestroyModuleConfig	FvwmForm:	Shutdown
+*Shutdown:	GrabServer
+*Shutdown:	WarpPointer
+*Shutdown:	Command		Beep
+*Shutdown:	Line		Center
+*Shutdown:	"Do you really want to Shutdown?"
+*Shutdown:	Line		Expand
+*Shutdown:	Button		quit "Shutdown" ^Q
+*Shutdown:	Command		$[fvwm_scrpt]/shutdown
+*Shutdown:	Button		quit "Cancel" ^[
+*Shutdown:	Command		Nop
+*Shutdown:	Timeout		20 $[fvwm_scrpt]/shutdown "Automatic Shutdown will occur in %% seconds."
+
 # Thumbnail Icons
 DestroyModuleConfig	Iconificate: 		*
 *Iconificate:		ThumbIconWidth 		150

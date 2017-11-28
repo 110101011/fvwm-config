@@ -9,8 +9,8 @@
 
 # NoActiveIconOverride / IconOverride
 Style	"*"		Icon 48x48/x.png, 		MiniIcon mini/x.png
-Style	"XTerm"		Icon insomnia/Terminal-48.png,	MiniIcon insomnia/terminal-24.png
-Style	"Firefox"	Icon insomnia/web-48.png,	MiniIcon insomnia/web-24.png	
+Style	"XTerm"		Icon insomnia/Terminal-48.png,	MiniIcon insomnia/Terminal-24.png
+Style	"Firefox"	Icon insomnia/Web-48.png,	MiniIcon insomnia/Web-24.png	
 Style	"Irssi"		Icon insomnia/Chat-48.png,	MiniIcon insomnia/Chat-24.png
 Style	"TuxCMD"	Icon insomnia/File-24.png,	MiniIcon insomnia/File-24.png
 

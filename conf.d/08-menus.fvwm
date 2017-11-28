@@ -29,8 +29,8 @@ AddToMenu	FvwmRootMenu			"Fvwm Root Menu" Title
 + "Fvwm Console%insomnia/Terminal-24.png%"	Module FvwmConsole
 + ""						Nop
 + "Help%insomnia/Help-24.png%"			Popup FvwmManPagesMenu
-+ "Restart FVWM%insomnia/Reset-24.png%"		Restart
-+ "Quit FVWM%insomnia/Close-24.png%"		Quit
++ "FVWM Options%insomnia/Fvwm-24.png%"		Popup FvwmOptionsMenu
++ "System%insomnia/System-24.png%"		Popup FvwmSystemMenu
 
 # Programs Menu
 DestroyMenu	FvwmProgramsMenu
@@ -88,6 +88,19 @@ AddToMenu	FvwmManPagesMenu		"FVWM Man Pages" Title
 + "fvwm-menu-directory%insomnia/Help-24.png%"	FvwmViewManPage	fvwm-menu-directory
 + "fvwm-menu-headlines%insomnia/Help-24.png%"	FvwmViewManPage	fvwm-menu-headlines
 + "fvwm-menu-xclock%insomnia/Help-24.png%"	FvwmViewManPage	fvwm-menu-xclock
+
+# FvwmOptionsMenu
+DestroyMenu	FvwmOptionsMenu
+AddToMenu	FvwmOptionsMenu		"FVWM" Title
++ "Restart FVWM%insomnia/Reset-24.png%"	Restart
++ "Quit FVWM%insomnia/Close-24.png%"	Quit
+
+# FvwmSystemMenu
+DestroyMenu	FvwmSystemMenu
+AddToMenu	FvwmSystemMenu		"System" Title
++ "Logout%insomnia/Logout-24.png%"	FvwmForm Logout
++ "Reboot%insomnia/Reset-24.png%"	FvwmForm Reboot
++ "Shutdown%insomnia/Close-24.png%"	FvwmForm Shutdown
 
 # Fvwm Window Operations Menu
 DestroyMenu FvwmWindowOpsMenu
