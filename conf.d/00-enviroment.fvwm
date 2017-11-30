@@ -12,7 +12,10 @@ SetEnv	fvwm_home 	$[HOME]/.fvwm
 SetEnv	fvwm_img	$[fvwm_home]/images
 SetEnv	fvwm_icon	$[fvwm_home]/icons
 SetEnv	fvwm_scrpt	$[fvwm_home]/scripts
+SetEnv	fvwm_mods	$[fvwm_home]/modules
 SetEnv	fvwm_wallpapers	$[fvwm_img]/wallpaper
+
+ModulePath	$[fvwm_mods]:/usr/lib/fvwm/2.6.7/
 
 # Set the ImagePath
 ImagePath	$[fvwm_icon]:$[fvwm_icon];.png:+

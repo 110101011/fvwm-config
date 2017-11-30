@@ -96,7 +96,7 @@ DestroyModuleConfig FvwmPager: *
 *FvwmPager: Rows 3
 
 # Buttons Left Top
-Style "MyButtons" NoTitle, !Handles, !Borders, Sticky, WindowListSkip, \
+Style "InsomniaButtons" NoTitle, !Handles, !Borders, Sticky, WindowListSkip, \
   CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable
 
 DestroyModuleConfig InsomniaButtons: *
