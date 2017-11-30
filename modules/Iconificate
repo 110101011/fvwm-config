@@ -76,7 +76,7 @@ sub iconic_mode  {
         my $out = my $in = my $stderr = "" ;
 
         my @cmd = ("xwd", "-silent", "-nobdrs", "-id", 
-            $wid, "-out", "/tmp/thumbicon.xwd" ) ;
+            $wid, "-out", "$ENV[FVWM_USERDIR]/tmp/thumbicon.xwd" ) ;
 
         #logger("debug", "@cmd") ;
 
@@ -85,13 +85,13 @@ sub iconic_mode  {
         } catch { "" } ;
 
         ##  If import cmnd produced error, then repeat again.
-        if ($stderr or not -r "/tmp/thumbicon.xwd")  {
+        if ($stderr or not -r "$ENV[FVWM_USERDIR]/tmp/thumbicon.xwd")  {
             logger("debug", "iconic_mode : import failed \n$stderr") ;
             next ;
         }
 
         ##  If png file cannot be opened, then repeat again.
-        if (not open(IMAGE, '/tmp/thumbicon.xwd')) {
+        if (not open(IMAGE, "$ENV[FVWM_USERDIR]/tmp/thumbicon.xwd")) {
             logger("debug", "iconic_mode : can't open thumbicon.xwd") ;
             next ;
         }
@@ -162,7 +162,7 @@ sub iconic_mode  {
     ##  Cleanup.
     undef $mini ;
     undef $thumb ;
-    unlink "/tmp/thumbicon.xwd" ;
+    unlink "$ENV[FVWM_USERDIR]/tmp/thumbicon.xwd" ;
 
     logger("debug", "iconic_mode : Finished with success ") ;
     return 1 ;
