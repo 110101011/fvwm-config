@@ -99,31 +99,31 @@ DestroyModuleConfig FvwmPager: *
 Style "MyButtons" NoTitle, !Handles, !Borders, Sticky, WindowListSkip, \
   CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable
 
-DestroyModuleConfig MyButtons: *
-*MyButtons: Geometry 70x400+0+0
-*MyButtons: Colorset 6
-*MyButtons: Rows 38
-*MyButtons: Columns 1
-*MyButtons: Frame 0
-*MyButtons: Font "Shadow=3:xft:Sans:Bold:pixelsize=14:minspace=True:antialias=True"
-*MyButtons: (1x5, Frame 0, Icon 	insomnia/Terminal-48.png, \
+DestroyModuleConfig InsomniaButtons: *
+*InsomniaButtons: Geometry 70x768+0+0
+*InsomniaButtons: Colorset 6
+*InsomniaButtons: Rows 20
+*InsomniaButtons: Columns 1
+*InsomniaButtons: Frame 0
+*InsomniaButtons: Font "Shadow=3:xft:Sans:Bold:pixelsize=14:minspace=True:antialias=True"
+*InsomniaButtons: (1x2, Frame 0, Icon 	insomnia/Terminal-48.png, \
 			   ActiveIcon 	insomnia/Terminal-64.png, \
 			   PressIcon	insomnia/Terminal-32.png, \
   	Action(Mouse 1) "FvwmXTerm")
-*MyButtons: (1x5, Frame 0, Icon 	insomnia/Web-48.png, \
+*InsomniaButtons: (1x2, Frame 0, Icon 	insomnia/Web-48.png, \
 			   ActiveIcon	insomnia/Web-64.png, \
 			   PressIcon	insomnia/Web-32.png, \
 	Action(Mouse 1) "FvwmFirefox")
-*MyButtons: (1x5, Frame 0, Icon 	insomnia/File-48.png, \
+*InsomniaButtons: (1x2, Frame 0, Icon 	insomnia/File-48.png, \
 			   ActiveIcon	insomnia/File-64.png, \
 			   PressIcon	insomnia/File-32.png, \
 	Action(Mouse 1) "FvwmTuxCMD")
-*MyButtons: (1x5, Frame 0, Icon 	insomnia/ImageEditor-48.png, \
+*InsomniaButtons: (1x2, Frame 0, Icon 	insomnia/ImageEditor-48.png, \
 			   ActiveIcon	insomnia/ImageEditor-64.png, \
 			   PressIcon	insomnia/ImageEditor-32.png, \
   	Action(Mouse 1) "FvwmGimp")
-*MyButtons: (1x5, Frame 0, Icon 	insomnia/Chat-48.png, \
+*InsomniaButtons: (1x2, Frame 0, Icon 	insomnia/Chat-48.png, \
 			   ActiveIcon	insomnia/Chat-64.png, \
 			   PressIcon	insomnia/Chat-32.png, \
   	Action(Mouse 1) "FvwmIrssi")
-*MyButtons: (1x1, Frame 0)
+*InsomniaButtons: (1x8, Frame 0)

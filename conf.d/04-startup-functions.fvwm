@@ -10,7 +10,7 @@
 DestroyFunc	StartFunction
 AddToFunc	StartFunction
 #+	I	FvwmPager	0 1
-+	I	FvwmButtons	MyButtons
++	I	FvwmButtons	InsomniaButtons
 +	I	Module		FvwmAuto FvwmAutoHide -menter FuncAutoEnter
 +	I	Test (Init) Test (x xterm)	StartHiddenConsole
 
